@@ -89,4 +89,13 @@ module.exports.logInUser = async (req, res) => {
  * @description Controller for get details of logged in user
  */
 
-module.exports.getLoggedInUserInfo = (req, res) => {};
+module.exports.getLoggedInUserInfo = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select("-password");
+    return res.status(200).json({ status: "success", data: { user } });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ status: "fail", message: "Internal server error" });
+  }
+};
