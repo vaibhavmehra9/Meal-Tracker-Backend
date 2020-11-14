@@ -1,6 +1,14 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
+/**
+ *
+ * @param {*} req
+ * @param {*} res
+ * @method POST
+ * @description Controller for creating a new user
+ */
 module.exports.signUpUser = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -30,6 +38,13 @@ module.exports.signUpUser = async (req, res) => {
   }
 };
 
+/**
+ *
+ * @param {*} req
+ * @param {*} res
+ * @method GET
+ * @description Controller for log in user
+ */
 module.exports.logInUser = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -54,13 +69,24 @@ module.exports.logInUser = async (req, res) => {
       });
     }
 
-    return res
-      .status(200)
-      .json({ status: "success", data: { user: isUserExist } });
+    const token = jwt.sign({ data: isUserExist._id }, "programming", {
+      expiresIn: "1h",
+    });
+
+    return res.status(200).json({ status: "success", data: { token } });
   } catch (error) {
-    console.log(error);
     return res
       .status(500)
       .json({ status: "fail", message: "Internal server error" });
   }
 };
+
+/**
+ *
+ * @param {*} req
+ * @param {*} res
+ * @method GET
+ * @description Controller for get details of logged in user
+ */
+
+module.exports.getLoggedInUserInfo = (req, res) => {};
