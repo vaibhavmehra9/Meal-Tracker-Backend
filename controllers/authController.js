@@ -109,3 +109,22 @@ module.exports.getLoggedInUserInfo = async (req, res) => {
       .json({ status: "fail", message: "Internal server error" });
   }
 };
+
+module.exports.logOutUser = async (req, res) => {
+  try {
+    await User.findByIdAndUpdate(
+      { _id: req.user._id },
+      { token: "" },
+      {
+        runValidators: true,
+      }
+    );
+    return res
+      .status(204)
+      .json({ status: "success", message: "Logged out successfully" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ status: "fail", message: "Internal server error" });
+  }
+};
