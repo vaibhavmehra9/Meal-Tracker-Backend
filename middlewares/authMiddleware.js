@@ -16,7 +16,10 @@ module.exports.checkIfUserAuthenticated = async (req, res, next) => {
   try {
     const decoded = jwt.verify(authorizationToken, "programming");
 
-    const user = await User.findById(decoded.data);
+    const user = await User.findOne({
+      _id: decoded.data,
+      token: authorizationToken,
+    });
 
     if (!user) {
       return res

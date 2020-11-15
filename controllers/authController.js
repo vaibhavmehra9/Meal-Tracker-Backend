@@ -48,7 +48,7 @@ module.exports.signUpUser = async (req, res) => {
 module.exports.logInUser = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const isUserExist = await User.findOne({ email: email }).exec();
+    const isUserExist = await User.findOne({ email: email });
 
     if (!isUserExist) {
       return res.status(400).json({
@@ -73,6 +73,14 @@ module.exports.logInUser = async (req, res) => {
       expiresIn: "1h",
     });
 
+    await User.findByIdAndUpdate(
+      isUserExist._id,
+      { token },
+      {
+        runValidators: true,
+      }
+    );
+
     return res.status(200).json({ status: "success", data: { token } });
   } catch (error) {
     return res
@@ -91,7 +99,9 @@ module.exports.logInUser = async (req, res) => {
 
 module.exports.getLoggedInUserInfo = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).select("-password");
+    const user = await User.findById(req.user._id)
+      .select("-password")
+      .select("-token");
     return res.status(200).json({ status: "success", data: { user } });
   } catch (error) {
     return res
