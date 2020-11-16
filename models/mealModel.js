@@ -11,7 +11,13 @@ const mealSchema = new mongoose.Schema({
     required: true,
   },
   date: {
-    type: String,
+    type: Date,
+    required: true,
+    default: Date.now(),
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
 });

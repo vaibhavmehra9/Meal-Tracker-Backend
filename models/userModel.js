@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const userSchema = new mongoose.Schema(
   {
@@ -24,6 +25,7 @@ const userSchema = new mongoose.Schema(
     token: {
       type: String,
     },
+    meals: [{ type: ObjectId, ref: "Meal" }],
   },
   { timestamps: true }
 );

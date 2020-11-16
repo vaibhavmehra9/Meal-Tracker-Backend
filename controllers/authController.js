@@ -70,7 +70,7 @@ module.exports.logInUser = async (req, res) => {
     }
 
     const token = jwt.sign({ data: isUserExist._id }, "programming", {
-      expiresIn: "1h",
+      expiresIn: "5h",
     });
 
     await User.findByIdAndUpdate(

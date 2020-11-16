@@ -22,9 +22,7 @@ module.exports.checkIfUserAuthenticated = async (req, res, next) => {
     });
 
     if (!user) {
-      return res
-        .status(400)
-        .json({ status: "fail", message: "User not found" });
+      return res.status(401).json({ status: "fail", message: "unauthorized" });
     }
 
     req.user = user;
