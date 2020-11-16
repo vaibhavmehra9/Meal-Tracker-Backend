@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/meal_tracker_development", {
+mongoose.connect(`${process.env.DATABASE_URI}`, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 });

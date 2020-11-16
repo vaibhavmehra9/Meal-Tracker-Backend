@@ -69,9 +69,13 @@ module.exports.logInUser = async (req, res) => {
       });
     }
 
-    const token = jwt.sign({ data: isUserExist._id }, "programming", {
-      expiresIn: "5h",
-    });
+    const token = jwt.sign(
+      { data: isUserExist._id },
+      `${process.env.JWT_SECRET}`,
+      {
+        expiresIn: "5h",
+      }
+    );
 
     await User.findByIdAndUpdate(
       isUserExist._id,

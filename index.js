@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config({ path: "./.env" });
 const appRoutes = require("./routes");
 const app = express();
 const db = require("./config/db");
@@ -16,9 +17,11 @@ app.all("*", (req, res) => {
   res.status(404).json({ status: "fail", message: "No route found" });
 });
 
-app.listen(8080, (err) => {
+const port = process.env.PORT || 8080;
+
+app.listen(port, (err) => {
   if (err) {
     console.log(`Error while starting server: ${err}`);
   }
-  console.log(`Server is up and running`);
+  console.log(`Server is up and running on port: ${port}`);
 });
