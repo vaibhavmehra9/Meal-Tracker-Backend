@@ -2,13 +2,6 @@ const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-/**
- *
- * @param {*} req
- * @param {*} res
- * @method POST
- * @description Controller for creating a new user
- */
 module.exports.signUpUser = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -38,13 +31,6 @@ module.exports.signUpUser = async (req, res) => {
   }
 };
 
-/**
- *
- * @param {*} req
- * @param {*} res
- * @method GET
- * @description Controller for log in user
- */
 module.exports.logInUser = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -92,14 +78,6 @@ module.exports.logInUser = async (req, res) => {
       .json({ status: "fail", message: "Internal server error" });
   }
 };
-
-/**
- *
- * @param {*} req
- * @param {*} res
- * @method GET
- * @description Controller for get details of logged in user
- */
 
 module.exports.getLoggedInUserInfo = async (req, res) => {
   try {
